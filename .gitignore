@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.log
+*.csv
+config/accounts.json
+config/settings.json
+temp_profile/
+playwright_rewards_*
+.env

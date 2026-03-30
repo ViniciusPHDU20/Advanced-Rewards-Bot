@@ -3,28 +3,36 @@ import time
 def login(page, email, password):
     try:
         print(f"🌐 Verificando sessão para: {email}...")
-        page.goto('https://rewards.bing.com/', wait_until="networkidle")
+        page.goto('https://rewards.bing.com/', wait_until="domcontentloaded", timeout=60000)
+        time.sleep(5)
 
-        # Se a URL contém 'dashboard' ou não estamos na tela de login, estamos logados!
+        # Se já estivermos no dashboard, sucesso imediato
         if "login.live.com" not in page.url:
-            print(f"✅ Sessão ativa detectada via Perfil Clonado!")
+            print(f"✅ Sessão ativa detectada!")
             return True
 
-        print("⌨️ Sessão expirada. Tentando re-login automático...")
-        page.fill('input[name="loginfmt"]', email)
-        page.click('input[type="submit"]')
+        print("⌨️ Sessão expirada. Inserindo e-mail para aprovação...")
+        # Seletor robusto para o campo de login
+        email_input = page.locator('input[type="email"], input[name="loginfmt"]').first
+        email_input.wait_for(state="visible", timeout=30000)
+        email_input.fill(email)
         
-        # Como o JESUS está dormindo, se pedir aprovação agora vai falhar.
-        # Mas o perfil clonado deve evitar isso 99% das vezes.
-        print("⚠️ [AUTÔNOMO] Aguardando 30s por possível auto-redirecionamento...")
-        time.sleep(30)
+        page.locator('input[type="submit"], #idSIButton9').click()
         
-        if "rewards.bing.com" in page.url:
+        print(f"🔔 [AÇÃO REQUERIDA] Aprove o login para {email} no celular!")
+        print("⏳ O bot vai aguardar 90 segundos...")
+        
+        # Espera o redirecionamento pós-aprovação
+        try:
+            page.wait_for_url("**/rewards.bing.com/**", timeout=90000)
+            print("✅ Login aprovado manualmente!")
             return True
-            
-        print("❌ Login falhou no modo autônomo (Requer aprovação manual).")
-        return False
+        except:
+            if "rewards.bing.com" in page.url:
+                return True
+            print("❌ Tempo esgotado para aprovação.")
+            return False
 
     except Exception as e:
-        print(f"❌ Erro no Login Autônomo: {e}")
+        print(f"❌ Erro no Login: {e}")
         return False

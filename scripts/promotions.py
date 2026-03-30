@@ -3,78 +3,77 @@ import random
 
 def complete_daily_set(page):
     try:
-        print("🛠️ Completando Daily Set...")
-        page.goto('https://rewards.bing.com/', wait_until="networkidle")
+        print("🛠️  Processando Daily Set...")
+        page.goto('https://rewards.bing.com/', wait_until="domcontentloaded")
         time.sleep(5)
 
-        # Seleciona todos os cards clicáveis
         cards = page.locator("mee-card")
         count = cards.count()
         
-        if count == 0:
-            print("⚠️ Daily Sets não encontrados!")
-            return
-
-        print(f"🔎 Encontrados {count} cards potenciais.")
-
         for i in range(count):
             try:
-                # Verifica se é um card de Daily Set (geralmente tem pontos visíveis)
                 card = cards.nth(i)
-                if not card.is_visible(): continue
+                # Verifica se o card tem pontos a ganhar (não concluído)
+                icon = card.locator(".mee-icon-CheckMark")
+                if icon.count() > 0:
+                    continue # Já concluído
                 
-                print(f"➡️ Processando card {i+1}...")
-                
-                # Clica no link do card em uma nova aba
+                print(f"➡️  Atividade {i+1} iniciada...")
                 with page.expect_popup() as popup_info:
                     card.locator("a").first.click(force=True)
                 
                 new_page = popup_info.value
                 new_page.wait_for_load_state("domcontentloaded")
-                
                 solve_task(new_page)
                 new_page.close()
-                time.sleep(random.uniform(2, 5))
-                
-            except Exception as e:
-                # print(f"⚠️ Ignorando card {i+1} (provavelmente já concluído ou não-clicável)")
-                pass
-
+                time.sleep(random.uniform(2, 4))
+            except:
+                continue
     except Exception as e:
-        print(f"⚠️ Erro no Daily Set: {e}")
+        print(f"⚠️  Erro no Daily Set: {e}")
 
 def solve_task(page):
     try:
-        time.sleep(5)
-        # Tenta responder Quizzes/Votações clicando na primeira opção disponível
-        options = page.locator("div[class*='rq_option'], .btOption, #btoption, .b_cards")
-        if options.count() > 0:
-            print("🧠 Interagindo com tarefa interativa...")
-            for _ in range(5): 
-                if options.count() > 0:
-                    try:
-                        options.first.click(timeout=5000)
-                        time.sleep(3)
-                    except: break
-                else: break
-        else:
-            print("📰 Tarefa de leitura ou simples clique concluída.")
-            time.sleep(5)
-
-    except Exception as e:
+        time.sleep(4)
+        # Quizzes e Enquetes
+        options = page.locator("div[class*='rq_option'], .btOption, #btoption, .b_cards, .rqOption")
+        for _ in range(10): 
+            if options.count() > 0:
+                try:
+                    options.first.click(timeout=3000)
+                    time.sleep(2)
+                except: break
+            else: break
+    except:
         pass
+
+def complete_punch_cards(page):
+    try:
+        print("🎯  Processando Punch Cards...")
+        page.goto('https://rewards.bing.com/', wait_until="domcontentloaded")
+        punches = page.locator(".punchcard-container mee-card a")
+        for i in range(punches.count()):
+            try:
+                with page.expect_popup() as popup_info:
+                    punches.nth(i).click(force=True)
+                new_page = popup_info.value
+                time.sleep(5)
+                new_page.close()
+            except: continue
+    except: pass
 
 def complete_promotions(page):
     try:
-        print("🎯 Completando promoções extras...")
+        print("🎁  Processando Promoções Adicionais...")
         page.goto('https://rewards.bing.com/', wait_until="domcontentloaded")
         promos = page.locator(".promotional-container mee-card a")
-        for i in range(min(promos.count(), 10)):
+        for i in range(promos.count()):
             try:
+                if "CheckMark" in promos.nth(i).inner_html(): continue
                 with page.expect_popup() as popup_info:
                     promos.nth(i).click(force=True)
                 new_page = popup_info.value
-                time.sleep(random.uniform(3, 6))
+                time.sleep(5)
                 new_page.close()
-            except: pass
+            except: continue
     except: pass
