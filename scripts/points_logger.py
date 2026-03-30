@@ -2,59 +2,45 @@ import csv
 import time
 from datetime import datetime
 
-def log_points(page):
-    filename = "points_log.csv"
-    today = datetime.now().strftime("%Y-%m-%d")
-    
+def get_current_points(page):
+    """Apenas extrai os pontos da tela sem logar no CSV."""
     try:
-        # Garante que estamos na página certa
         if "rewards.bing.com" not in page.url:
-            page.goto('https://rewards.bing.com/', wait_until="networkidle", timeout=60000)
+            page.goto('https://rewards.bing.com/', wait_until="domcontentloaded", timeout=60000)
         
-        # A Microsoft usa animações para os pontos, precisamos esperar!
-        time.sleep(8) 
+        time.sleep(5) 
 
-        # 🚀 MÉTODO SOBERANO V2: Foco no componente de animação e aria-label
         points = page.evaluate("""() => {
             try {
-                // 1. Tenta o span dentro do contador de animação (O mais preciso)
                 let counter = document.querySelector('mee-rewards-counter-animation span[aria-label]');
                 if (counter) return counter.getAttribute('aria-label');
-                
-                // 2. Tenta qualquer elemento com a classe de pontos do header
                 let headerPoints = document.querySelector('#meControlSiginHeader');
                 if (headerPoints) return headerPoints.innerText;
-
-                // 3. Tenta o ID clássico
                 let dailyPoints = document.querySelector('#mee-card-group-points');
                 if (dailyPoints) return dailyPoints.innerText;
-
                 return "0";
-            } catch(e) {
-                return "0";
-            }
+            } catch(e) { return "0"; }
         }""")
 
-        # Limpeza agressiva: Mantém apenas números
         points_cleaned = "".join(filter(str.isdigit, str(points)))
+        return int(points_cleaned) if points_cleaned else 0
+    except:
+        return 0
 
-        # Se falhou ou deu 0, tenta um Regex final no texto visível da página
-        if not points_cleaned or points_cleaned == "0":
-            try:
-                body_text = page.inner_text("body")
-                import re
-                # Procura o saldo total que geralmente aparece no topo
-                match = re.search(r'(\d+[\.,]\d+|\d+)\s*(pontos|points|disponíveis|available)', body_text, re.IGNORECASE)
-                if match:
-                    points_cleaned = "".join(filter(str.isdigit, match.group(1)))
-            except: pass
-
+def log_points(page, session_earned=None):
+    """Extrai os pontos e salva no histórico CSV."""
+    filename = "points_log.csv"
+    today = datetime.now().strftime("%Y-%m-%d")
+    current_total = get_current_points(page)
+    
+    try:
         with open(filename, mode="a", newline="") as file:
             writer = csv.writer(file)
-            writer.writerow([today, points_cleaned])
+            # Colunas: Data, Total, Ganhos na Sessão
+            writer.writerow([today, current_total, session_earned if session_earned is not None else 0])
             
-        print(f"📊 Saldo Total capturado: {points_cleaned}")
-        return points_cleaned if points_cleaned else "0"
+        print(f"📊 Saldo Total: {current_total} | Ganho hoje: {session_earned}")
+        return current_total
     except Exception as e:
-        print(f"❌ Falha ao extrair saldo: {e}")
-        return "Error"
+        print(f"❌ Falha ao logar pontos: {e}")
+        return current_total
