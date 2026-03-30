@@ -1,0 +1,8 @@
+{
+  "headless": true,
+  "discord_webhook": "https://discord.com/api/webhooks/...",
+  "desktop_searches": 30,
+  "mobile_searches": 20,
+  "search_delay_min": 3,
+  "search_delay_max": 7
+}
