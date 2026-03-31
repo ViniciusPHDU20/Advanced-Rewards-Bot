@@ -1,4 +1,4 @@
-# main.py - MODO SOBERANO AUTÔNOMO
+# main.py - AUTONOMOUS REWARDS ENGINE
 
 import time
 import json
@@ -11,57 +11,56 @@ from scripts.points_logger import log_points, get_current_points
 from scripts.notifier import send_discord_notification
 
 def farm_account(p, account):
-    # 🖥️ INÍCIO DA SESSÃO
-    print(f"🖥️  Iniciando farming para {account['email']}...")
+    # 🖥️ SESSION START
+    print(f"🖥️  Starting farming for {account['email']}...")
     try:
         context, page = create_browser(p, mobile=False)
         if login(page, account['email'], account['password']):
-            # 🏁 Captura saldo inicial
+            # 🏁 Capture initial balance
             starting_pts = get_current_points(page)
-            print(f"💰 Saldo Inicial: {starting_pts} pts")
+            print(f"💰 Initial Balance: {starting_pts} pts")
 
-            # Executa tarefas Desktop
+            # Execute Desktop tasks
             complete_daily_set(page)
             complete_punch_cards(page)
             complete_promotions(page)
             perform_searches(page, mobile=False)
             
-            # Executa tarefas Mobile (reaproveitando o contexto se possível ou abrindo novo)
-            # Para mobile, o ideal é um novo contexto para trocar o User-Agent
+            # Execute Mobile tasks
             context.close()
             
-            print(f"📱 Mudando para modo MOBILE...")
+            print(f"📱 Switching to MOBILE mode...")
             context, page = create_browser(p, mobile=True)
             if login(page, account['email'], account['password']):
                 perform_searches(page, mobile=True)
             
-            # 🏁 Captura saldo final e calcula ganhos
+            # 🏁 Capture final balance and calculate earnings
             final_pts = get_current_points(page)
             earned = final_pts - starting_pts
             
-            print(f"\n💎 PONTOS GANHOS NESTA SESSÃO: {earned}")
+            print(f"\n💎 POINTS EARNED THIS SESSION: {earned}")
             log_points(page, session_earned=earned)
             
-            send_discord_notification(account['email'], f"Sessão finalizada! Ganhos: +{earned} pts | Total: {final_pts} pts ✅")
+            send_discord_notification(account['email'], f"Session completed! Earned: +{earned} pts | Total: {final_pts} pts ✅")
             
         context.close()
     except Exception as e:
-        print(f"⚠️  Erro durante a sessão: {e}")
+        print(f"⚠️  Session Error: {e}")
 
 def main():
     try:
         with open("config/accounts.json", "r") as f:
             accounts = json.load(f)
     except Exception as e:
-        print(f"❌ Erro ao ler accounts.json: {e}")
+        print(f"❌ Error reading accounts.json: {e}")
         return
 
     with sync_playwright() as p:
         for account in accounts:
-            print(f"\n🚀 [AUTÔNOMO] Processando conta: {account['email']}")
+            print(f"\n🚀 [AUTONOMOUS] Processing account: {account['email']}")
             farm_account(p, account)
 
 if __name__ == "__main__":
-    print("🤖 JESUS REWARDS BOT - SISTEMA 100% OPERACIONAL")
+    print("🤖 AUTOMATION BOT - SYSTEM ONLINE")
     main()
-    print("\n🏁 MISSÃO FINALIZADA.")
+    print("\n🏁 PROCESS FINISHED.")

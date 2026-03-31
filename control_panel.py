@@ -4,7 +4,7 @@ import sys
 def main_menu():
     os.system('clear')
     print("==========================================")
-    print("   🚀 JESUS REWARDS BOT - CONTROL PANEL")
+    print("   🚀 REWARDS AUTOMATION ENGINE - CONTROL PANEL")
     print("==========================================")
     print("1) Iniciar Farming Completo (Desktop + Mobile)")
     print("2) Visualizar Log de Pontos")

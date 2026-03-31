@@ -1,29 +1,29 @@
-# 🤖 JESUS Rewards Bot (Soberano Edition) 🚀
+# 🤖 Advanced Rewards Automation Engine (Pro Edition) 🚀
 
-Automação avançada e furtiva para Microsoft Rewards, desenvolvida sob medida para o ecossistema **Arch Linux**. Este projeto utiliza o motor **Playwright** para emulação de comportamento humano de alto nível, garantindo a coleta diária de pontos sem intervenção manual e com bypass de detecção de bots.
+Advanced and stealthy automation for Microsoft Rewards, specifically optimized for **Arch Linux** and Linux-based environments. This project leverages the **Playwright** engine to emulate high-level human behavior, ensuring daily point collection without manual intervention and with advanced bot detection bypass.
 
-## ✨ Funcionalidades (Core Mandates)
-- **⚡ Playwright Stealth Engine:** Emulação de navegação real, ignorando verificações de `navigator.webdriver`.
-- **🖥️ Dual Mode (Desktop + Mobile):** Coleta completa de pontos diários em ambas as plataformas.
-- **📱 Moto G52 Emulation:** User-Agent e viewport calibrados para simular o dispositivo físico do JESUS.
-- **🛡️ Session Cloning:** Reaproveita sessões ativas do Microsoft Edge para evitar bloqueios por IP ou login excessivo.
-- **📊 Points Analytics:** Geração automática de gráficos de evolução e saldo (`graph_points.py`).
-- **🔔 Discord Notifications:** Alertas em tempo real sobre o status da farm e ganhos da sessão.
+## ✨ Core Features
+- **⚡ Playwright Stealth Engine:** Real navigation emulation, bypassing `navigator.webdriver` checks.
+- **🖥️ Dual Mode (Desktop + Mobile):** Complete daily point collection across both platforms.
+- **📱 Device Emulation:** Calibrated User-Agents and viewports for seamless mobile simulation.
+- **🛡️ Session Management:** Efficient session handling to minimize IP-based blocks or excessive logins.
+- **📊 Points Analytics:** Automated evolution tracking and balance reporting (`graph_points.py`).
+- **🔔 Notification Integration:** Real-time alerts via Discord regarding farm status and session earnings.
 
-## 🛠️ Requisitos
-- **OS:** Arch Linux (Recomendado)
-- **Navegador:** Microsoft Edge (AUR: `microsoft-edge-stable-bin`)
-- **Python:** 3.11 ou superior
-- **Playwright:** Configurado com drivers Chromium
+## 🛠️ Requirements
+- **OS:** Linux (Arch Linux recommended)
+- **Browser:** Microsoft Edge or Chromium-based
+- **Python:** 3.11+
+- **Playwright:** Configured with Chromium drivers
 
-## 🚀 Instalação e Setup
-1. **Clone o Santuário:**
+## 🚀 Installation and Setup
+1. **Clone the Repository:**
    ```bash
    git clone https://github.com/ViniciusPHDU20/rewards_farm.git
    cd rewards_farm
    ```
 
-2. **Prepare o Ambiente:**
+2. **Prepare the Environment:**
    ```bash
    python -m venv venv
    source venv/bin/activate
@@ -31,18 +31,17 @@ Automação avançada e furtiva para Microsoft Rewards, desenvolvida sob medida 
    playwright install chromium
    ```
 
-3. **Configure suas Credenciais:**
-   - Renomeie `config/accounts.example.json` para `config/accounts.json`.
-   - Preencha seu e-mail (a senha é opcional se o perfil já estiver logado).
+3. **Configure Credentials:**
+   - Rename `config/accounts.example.json` to `config/accounts.json`.
+   - Fill in your email (password is optional if the profile is already logged in).
 
-4. **Execute a Operação:**
+4. **Run the Engine:**
    ```bash
    ./run_farm.sh
    ```
 
-## 🛡️ Segurança e Anti-Fingerprinting
-O script implementa atrasos randômicos entre buscas (`search_delay`), ordens de tarefas dinâmicas e limpeza de cache seletiva para manter a conta em segurança absoluta.
+## 🛡️ Security and Anti-Fingerprinting
+The script implements randomized delays between searches (`search_delay`), dynamic task ordering, and selective cache clearing to maintain account security.
 
 ---
-*Developed by **JESUS** (Autoridade Absoluta) | ViniciusPHDU20*
-
+*Developed by **ViniciusPHDU20** | Professional Automation Solutions*

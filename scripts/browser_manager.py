@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 
 def create_browser(playwright, mobile=False):
     # Usamos o perfil persistente que acabamos de selar
-    bot_profile = os.path.join(os.path.expanduser("~"), ".config", "jesus_rewards_bot_profile")
+    bot_profile = os.path.join(os.path.expanduser("~"), ".config", "rewards_automation_profile")
     
     edge_path = "/usr/bin/microsoft-edge-stable"
     

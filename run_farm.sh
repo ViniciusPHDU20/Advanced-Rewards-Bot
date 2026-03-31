@@ -1,20 +1,25 @@
 #!/bin/bash
-# JESUS REWARDS BOT - LAUNCHER
-# MODO SOBERANO ATIVADO
 
-BASE_DIR="$HOME/WORKSPACE_CORE/rewards_farm"
-cd "$BASE_DIR"
+# REWARDS AUTOMATION ENGINE - LAUNCHER
+# Optimized for Arch Linux environments
 
-if [ ! -d "venv" ]; then
-    echo "⚙️ Criando ambiente virtual..."
-    python -m venv venv
+echo "🚀 Initializing Rewards Automation Engine..."
+
+# Navigate to script directory
+cd "$(dirname "$0")"
+
+# Activate virtual environment
+if [ -d "venv" ]; then
     source venv/bin/activate
-    pip install -r requirements.txt
-    playwright install chromium
 else
-    source venv/bin/activate
+    echo "❌ Virtual environment not found. Please run installation steps."
+    exit 1
 fi
 
-echo "🚀 INICIANDO FARMING (DESKTOP + MOBILE)..."
+# Run the main engine
 python main.py
-echo "🏁 SESSÃO CONCLUÍDA."
+
+# Deactivate venv
+deactivate
+
+echo "🏁 Automation session finished."
