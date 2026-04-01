@@ -1,13 +1,20 @@
-2026/04/01-18:14:36.130 758ae Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Session Storage/MANIFEST-000001
-2026/04/01-18:14:36.131 758ae Recovering log #84
-2026/04/01-18:14:36.131 758ae Level-0 table #88: started
-2026/04/01-18:14:36.133 758ae Level-0 table #88: 18514 bytes OK
-2026/04/01-18:14:36.133 758ae Recovering log #88
-2026/04/01-18:14:36.133 758ae Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Session Storage/000088.log 
-2026/04/01-18:14:36.135 758ae Delete type=0 #84
-2026/04/01-18:18:36.604 758b0 Level-0 table #90: started
-2026/04/01-18:18:36.610 758b0 Level-0 table #90: 207768 bytes OK
-2026/04/01-18:18:36.613 758b0 Delete type=0 #88
-2026/04/01-18:37:08.471 758b0 Level-0 table #92: started
-2026/04/01-18:37:08.492 758b0 Level-0 table #92: 977418 bytes OK
-2026/04/01-18:37:08.496 758b0 Delete type=0 #89
+2026/04/01-20:02:49.454 7de5a Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Session Storage/MANIFEST-000001
+2026/04/01-20:02:49.455 7de5a Recovering log #229
+2026/04/01-20:02:49.457 7de5a Level-0 table #232: started
+2026/04/01-20:02:49.461 7de5a Level-0 table #232: 188522 bytes OK
+2026/04/01-20:02:49.462 7de5a Recovering log #232
+2026/04/01-20:02:49.462 7de5a Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Session Storage/000232.log 
+2026/04/01-20:02:49.463 7de5a Delete type=0 #229
+2026/04/01-20:02:49.464 7de5c Compacting 4@0 + 2@1 files
+2026/04/01-20:02:49.489 7de5c Generated table #233@0: 1664 keys, 1286248 bytes
+2026/04/01-20:02:49.489 7de5c Compacted 4@0 + 2@1 files => 1286248 bytes
+2026/04/01-20:02:49.490 7de5c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/04/01-20:02:49.492 7de5c Delete type=2 #230
+2026/04/01-20:02:49.492 7de5c Delete type=2 #232
+2026/04/01-20:02:49.492 7de5c Delete type=2 #227
+2026/04/01-20:02:49.492 7de5c Delete type=2 #222
+2026/04/01-20:02:49.492 7de5c Delete type=2 #223
+2026/04/01-20:02:49.492 7de5c Delete type=2 #225
+2026/04/01-20:02:51.900 7de5c Level-0 table #235: started
+2026/04/01-20:02:51.902 7de5c Level-0 table #235: 10543 bytes OK
+2026/04/01-20:02:51.905 7de5c Delete type=0 #232

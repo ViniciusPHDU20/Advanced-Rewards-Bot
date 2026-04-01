@@ -1,15 +1,15 @@
-2026/04/01-18:14:39.216 7589c Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/EdgeCoupons/coupons_data.db/MANIFEST-000001
-2026/04/01-18:14:39.217 7589c Recovering log #94
-2026/04/01-18:14:39.217 7589c Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/EdgeCoupons/coupons_data.db/000094.log 
-2026/04/01-18:14:39.225 75897 Level-0 table #98: started
-2026/04/01-18:14:39.227 75897 Level-0 table #98: 682144 bytes OK
-2026/04/01-18:14:39.228 75897 Delete type=0 #94
-2026/04/01-18:14:39.228 75897 Compacting 4@0 + 1@1 files
-2026/04/01-18:14:39.231 75897 Generated table #99@0: 4 keys, 682051 bytes
-2026/04/01-18:14:39.231 75897 Compacted 4@0 + 1@1 files => 682051 bytes
-2026/04/01-18:14:39.232 75897 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/04/01-18:14:39.232 75897 Delete type=2 #86
-2026/04/01-18:14:39.233 75897 Delete type=2 #92
-2026/04/01-18:14:39.233 75897 Delete type=2 #95
-2026/04/01-18:14:39.233 75897 Delete type=2 #98
-2026/04/01-18:14:39.233 75897 Delete type=2 #89
+2026/04/01-20:02:55.372 7de3f Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/04/01-20:02:55.373 7de3f Recovering log #237
+2026/04/01-20:02:55.374 7de3f Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/EdgeCoupons/coupons_data.db/000237.log 
+2026/04/01-20:02:55.381 7de36 Level-0 table #241: started
+2026/04/01-20:02:55.383 7de36 Level-0 table #241: 682144 bytes OK
+2026/04/01-20:02:55.385 7de36 Delete type=0 #237
+2026/04/01-20:02:55.385 7de36 Compacting 4@0 + 1@1 files
+2026/04/01-20:02:55.388 7de36 Generated table #242@0: 4 keys, 682051 bytes
+2026/04/01-20:02:55.388 7de36 Compacted 4@0 + 1@1 files => 682051 bytes
+2026/04/01-20:02:55.389 7de36 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/04/01-20:02:55.389 7de36 Delete type=2 #235
+2026/04/01-20:02:55.389 7de36 Delete type=2 #229
+2026/04/01-20:02:55.390 7de36 Delete type=2 #232
+2026/04/01-20:02:55.390 7de36 Delete type=2 #241
+2026/04/01-20:02:55.390 7de36 Delete type=2 #238
