@@ -1,5 +1,6 @@
 import asyncio
 import random
+import os
 from typing import Dict, Any, List, Optional
 from playwright.async_api import async_playwright, BrowserContext, Page
 from src.utils.logger import logger

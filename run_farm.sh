@@ -1,25 +1,22 @@
 #!/bin/bash
 
-# REWARDS AUTOMATION ENGINE - LAUNCHER
-# Optimized for Arch Linux environments
+# REWARDS AUTOMATION ENGINE - LAUNCHER PRO v1.3
+# Full CLI Argument Support
 
-echo "🚀 Initializing Rewards Automation Engine..."
+BASE_DIR="/home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot"
+cd "$BASE_DIR"
 
-# Navigate to script directory
-cd "$(dirname "$0")"
+PYTHON_VENV="$BASE_DIR/venv/bin/python"
 
-# Activate virtual environment
-if [ -d "venv" ]; then
-    source venv/bin/activate
-else
-    echo "❌ Virtual environment not found. Please run installation steps."
+if [ ! -f "$PYTHON_VENV" ]; then
+    echo "❌ Ambiente virtual não encontrado!"
     exit 1
 fi
 
-# Run the main engine
-python main.py
+echo "🎯 Iniciando Advanced Rewards Bot..."
+export PYTHONPATH="$BASE_DIR"
 
-# Deactivate venv
-deactivate
+# Passar todos os argumentos do bash para o Python
+"$PYTHON_VENV" -m src.main "$@"
 
-echo "🏁 Automation session finished."
+echo "🏁 Operação finalizada."
