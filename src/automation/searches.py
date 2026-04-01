@@ -19,19 +19,19 @@ class SearchAutomation:
             "como otimizar xeon v2", "kernel linux-zen performance"
         ]
         search_list = random.sample(terms * (count // len(terms) + 1), count)
+        # Garante que o motor saiba que é Desktop
         await self.engine.perform_search(search_list, is_mobile=False)
 
     async def run_mobile_searches(self, count: int = 25):
-        """Executa buscas Mobile emulando o Moto G52."""
-        # User-Agent do Moto G52 do JESUS
+        """Executa buscas Mobile emulando o Moto G52 de forma silenciosa."""
         mobile_ua = "Mozilla/5.0 (Linux; Android 16; Moto G52) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
         
-        # Reinicia o contexto em modo OCULTO para o mobile ser silencioso
-        logger.info("Trocando identidade para MOBILE (Moto G52) - Modo Silencioso...")
+        # CORREÇÃO CRÍTICA: Passar is_mobile=True para ativar hardware de celular no Playwright
+        logger.info("Configurando ambiente MOBILE Soberano...")
         await self.engine.shutdown()
-        await self.engine.initialize(headless=True, user_agent=mobile_ua)
+        await self.engine.initialize(headless=True, user_agent=mobile_ua, is_mobile=True)
         
-        terms = ["restaurantes próximos", "preço gasolina hoje", "jogos mobile", "clima amanhã"]
+        terms = ["restaurantes próximos", "preço gasolina hoje", "jogos mobile", "clima amanhã", "notícias esportes"]
         search_list = random.sample(terms * (count // len(terms) + 1), count)
         
         await self.engine.perform_search(search_list, is_mobile=True)
