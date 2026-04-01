@@ -56,6 +56,11 @@ async def interactive_menu():
             elif choice == "3":
                 logger.info("Abrindo navegador para validação única de conta...")
                 await engine.initialize(headless=False)
+                
+                # Navegação forçada para a página de login
+                logger.info("Navegando para Microsoft Login...")
+                await engine.page.goto("https://login.live.com/", wait_until="networkidle")
+                
                 print("\n\033[93m[!] Realize o login no Bing e marque 'Mantenha-me conectado'.\033[0m")
                 print("\033[93m[!] Quando estiver logado e vendo seus pontos, feche o navegador.\033[0m")
                 input("\n\033[92mPressione ENTER aqui APÓS fechar o navegador para validar a sessão.\033[0m")
