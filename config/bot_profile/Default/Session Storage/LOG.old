@@ -1,0 +1,15 @@
+2026/04/01-08:58:55.399 48764 Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Session Storage/MANIFEST-000001
+2026/04/01-08:58:55.402 48764 Recovering log #36
+2026/04/01-08:58:55.403 48764 Level-0 table #38: started
+2026/04/01-08:58:55.404 48764 Level-0 table #38: 14255 bytes OK
+2026/04/01-08:58:55.406 48764 Delete type=0 #36
+2026/04/01-08:58:55.406 4876a Compacting 4@0 + 2@1 files
+2026/04/01-08:58:55.419 4876a Generated table #40@0: 316 keys, 13341 bytes
+2026/04/01-08:58:55.419 4876a Compacted 4@0 + 2@1 files => 13341 bytes
+2026/04/01-08:58:55.420 4876a compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/04/01-08:58:55.421 4876a Delete type=2 #26
+2026/04/01-08:58:55.421 4876a Delete type=2 #35
+2026/04/01-08:58:55.421 4876a Delete type=2 #27
+2026/04/01-08:58:55.421 4876a Delete type=2 #38
+2026/04/01-08:58:55.421 4876a Delete type=2 #33
+2026/04/01-08:58:55.421 4876a Delete type=2 #30

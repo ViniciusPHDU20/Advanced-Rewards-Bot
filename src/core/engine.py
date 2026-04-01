@@ -1,25 +1,26 @@
 import asyncio
 import os
-import shutil
 import random
 from typing import Dict, Any, List, Optional
-from playwright.async_api import async_playwright, BrowserContext, Page
+from playwright.async_api import async_playwright, Browser, BrowserContext, Page
 from src.utils.logger import logger
 
 class RewardsEngine:
     """
-    Motor de Automação Soberano v4.4.
-    Focado em invisibilidade (Stealth) e estabilidade em modo Headless.
+    Motor de Automação Soberano v5.0.
+    Engenharia de Injeção de Pontos validada via Lab de Pesquisa.
     """
 
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self._playwright = None
+        self.browser: Optional[Browser] = None
         self.context: Optional[BrowserContext] = None
         self.page: Optional[Page] = None
         self.profile_path = os.path.expanduser("~/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile")
 
     def _clean_locks(self):
+        """Elimina travas de processo para evitar erros de lançamento."""
         lock_files = ["SingletonLock", "SingletonSocket", "SingletonCookie"]
         if os.path.exists(self.profile_path):
             for root, _, files in os.walk(self.profile_path):
@@ -28,16 +29,17 @@ class RewardsEngine:
                         try: os.remove(os.path.join(root, file))
                         except: pass
 
-    async def initialize(self, headless: bool = False, user_agent: str = None):
+    async def initialize(self, headless: bool = True, user_agent: str = None):
+        """Inicializa o motor em modo furtivo."""
         self._clean_locks()
         if not self._playwright:
             self._playwright = await async_playwright().start()
 
         ua = user_agent or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0"
         
-        logger.info(f"Lançando Navegador (Headless: {headless})...")
+        logger.info(f"Iniciando Motor {'OCULTO' if headless else 'VISÍVEL'}...")
+        
         try:
-            # Contexto com Bypass de Detecção Avançado
             self.context = await self._playwright.chromium.launch_persistent_context(
                 user_data_dir=self.profile_path,
                 channel="msedge",
@@ -48,54 +50,52 @@ class RewardsEngine:
                 args=[
                     "--no-sandbox",
                     "--disable-blink-features=AutomationControlled",
-                    "--no-first-run",
                     "--disable-infobars",
                     "--hide-scrollbars"
                 ]
             )
             
-            # Script de Evasão (Esconde que é um bot)
             self.page = self.context.pages[0] if self.context.pages else await self.context.new_page()
+            # Script de bypass de detecção de automação
             await self.page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
             
             self.page.set_default_timeout(60000)
-            await self.page.goto("https://www.bing.com", wait_until="domcontentloaded")
-            logger.info("Sistema Invisível e Pronto.")
+            logger.info("Motor sincronizado.")
             
         except Exception as e:
-            logger.error(f"Erro no lançamento: {e}")
+            logger.error(f"Falha no boot do motor: {e}")
             await self.shutdown()
             raise e
 
     async def perform_search(self, keywords: List[str], is_mobile: bool = False):
-        """Buscas com injeção de comportamento humano profundo."""
-        if not self.page: raise RuntimeError("Engine não preparada.")
+        """Executa o padrão de injeção validado no laboratório."""
+        if not self.page: raise RuntimeError("Motor não inicializado.")
 
         reward_param = "ML102W" if not is_mobile else "ML102V"
+        mode_str = "MOBILE" if is_mobile else "DESKTOP"
         
+        logger.info(f"Iniciando ciclo de farm {mode_str}...")
+
         for index, term in enumerate(keywords):
             try:
-                # Bypass de telemetria a cada ciclo
-                if index % 4 == 0:
-                    await self.page.goto("https://www.bing.com", wait_until="networkidle")
-                    await asyncio.sleep(random.uniform(3, 6))
-
-                url = f"https://www.bing.com/search?q={term.replace(' ', '+')}&form={reward_param}&OCID={reward_param}"
+                # URL parametrizada para forçar o crédito dos pontos
+                url = f"https://www.bing.com/search?q={term.replace(' ', '+')}&form={reward_param}&OCID={reward_param}&PUBL=REWARDS_DASHBOARD"
+                
                 await self.page.goto(url, wait_until="domcontentloaded")
                 
-                # Simulação Humana Real: Espera e Scroll Dinâmico
-                delay = random.uniform(12, 20)
-                logger.info(f"[{index+1}/{len(keywords)}] {term} | Delay: {delay:.1f}s")
+                # Human-like interaction (Scroll e Pausa)
+                delay = random.uniform(15, 25)
+                logger.info(f"[{index+1}/{len(keywords)}] {term} | Aguardando {delay:.1f}s")
                 
-                # Movimentação randômica do mouse e scroll para validar o ponto
-                for _ in range(random.randint(2, 5)):
-                    await asyncio.sleep(random.uniform(2, 4))
-                    await self.page.mouse.wheel(0, random.randint(300, 800))
+                # Movimentos de mouse e scroll para validar a atividade
+                for _ in range(random.randint(2, 4)):
+                    await asyncio.sleep(random.uniform(2, 5))
+                    await self.page.mouse.wheel(0, random.randint(400, 1000))
                 
                 await asyncio.sleep(delay / 2)
                 
             except Exception as e:
-                logger.warning(f"Erro na busca {term}: {e}")
+                logger.warning(f"Erro na injeção {term}: {e}")
 
     async def shutdown(self):
         try:
@@ -106,4 +106,4 @@ class RewardsEngine:
             self.context = None
             self.page = None
             self._playwright = None
-            logger.info("Sistema em standby.")
+            logger.info("Motor em standby.")
