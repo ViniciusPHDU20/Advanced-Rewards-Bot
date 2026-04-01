@@ -1,47 +1,71 @@
-# 🤖 Advanced Rewards Automation Engine (Pro Edition) 🚀
+# Advanced Rewards Bot (Soberano Edition)
 
-Advanced and stealthy automation for Microsoft Rewards, specifically optimized for **Arch Linux** and Linux-based environments. This project leverages the **Playwright** engine to emulate high-level human behavior, ensuring daily point collection without manual intervention and with advanced bot detection bypass.
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/ViniciusPHDU20/Advanced-Rewards-Bot/graphs/commit-activity)
 
-## ✨ Core Features
-- **⚡ Playwright Stealth Engine:** Real navigation emulation, bypassing `navigator.webdriver` checks.
-- **🖥️ Dual Mode (Desktop + Mobile):** Complete daily point collection across both platforms.
-- **📱 Device Emulation:** Calibrated User-Agents and viewports for seamless mobile simulation.
-- **🛡️ Session Management:** Efficient session handling to minimize IP-based blocks or excessive logins.
-- **📊 Points Analytics:** Automated evolution tracking and balance reporting (`graph_points.py`).
-- **🔔 Notification Integration:** Real-time alerts via Discord regarding farm status and session earnings.
+## 📌 Visão Geral
 
-## 🛠️ Requirements
-- **OS:** Linux (Arch Linux recommended)
-- **Browser:** Microsoft Edge or Chromium-based
-- **Python:** 3.11+
-- **Playwright:** Configured with Chromium drivers
+O **Advanced Rewards Bot** é uma engine de automação de alto desempenho projetada para a plataforma Microsoft Rewards. Construída com foco em **fator de evasão de detecção (EDF)** e **estabilidade de execução**, a ferramenta utiliza uma arquitetura híbrida de **Playwright** para orquestração de sessões e **Ghost Engine** para emulação nativa de entrada de hardware (HID) no Linux/Wayland.
 
-## 🚀 Installation and Setup
-1. **Clone the Repository:**
+O projeto foi arquitetado sob princípios **SOLID**, permitindo a integração de interfaces gráficas customizadas e a expansão de módulos de busca sem a necessidade de alteração no núcleo do sistema.
+
+## 🚀 Principais Funcionalidades
+
+- **Multi-Plataforma (Emulação):** Suporte nativo para emulação de dispositivos mobile (ex: Moto G52) com injeção de User-Agent e viewport dinâmico.
+- **Ghost Engine (Bypass Nível 2):** Utiliza `wtype` e `hyprctl` para simular entradas de teclado e mouse reais no Hyprland, evitando detecções sintéticas do WebRTC.
+- **Arquitetura Baseada em Hooks:** Pronto para integração com GUIs (Qt, Rust/Iced, Go/Fyne) via barramento de eventos.
+- **Gerenciamento de Sessão Persistente:** Clonagem e restauração automática de perfis de navegação para evitar re-logins constantes.
+- **Sistema de Log Enterprise:** Logs rotativos e estruturados em JSON para auditoria técnica.
+
+## 🏗️ Arquitetura do Sistema
+
+```bash
+Advanced-Rewards-Bot/
+├── src/
+│   ├── api/            # Interfaces e barramento de eventos para GUI
+│   ├── automation/     # Lógica específica de busca e farm
+│   ├── core/           # Motor principal (Playwright Engine)
+│   ├── utils/          # Helpers, Loggers e Config-Manager
+│   └── main.py         # Ponto de entrada (Entrypoint)
+├── config/             # Arquivos de configuração (YAML/ENV)
+├── docs/               # Documentação técnica estendida
+└── tests/              # Suíte de testes unitários e integração
+```
+
+## 🛠️ Instalação e Configuração
+
+### Pré-requisitos
+- Python 3.10+
+- Playwright (`pip install playwright`)
+- Wtype (para Linux/Wayland)
+
+### Configuração
+1. Clone o repositório:
    ```bash
-   git clone https://github.com/ViniciusPHDU20/rewards_farm.git
-   cd rewards_farm
+   git clone https://github.com/ViniciusPHDU20/Advanced-Rewards-Bot.git
    ```
-
-2. **Prepare the Environment:**
+2. Instale as dependências:
    ```bash
-   python -m venv venv
-   source venv/bin/activate
    pip install -r requirements.txt
    playwright install chromium
    ```
+3. Configure as credenciais no diretório `config/settings.yaml`.
 
-3. **Configure Credentials:**
-   - Rename `config/accounts.example.json` to `config/accounts.json`.
-   - Fill in your email (password is optional if the profile is already logged in).
+## 📈 Roadmap de Desenvolvimento
 
-4. **Run the Engine:**
-   ```bash
-   ./run_farm.sh
-   ```
+- [x] Motor de Automação Core (v1.0)
+- [x] Integração Ghost Engine (Bypass)
+- [ ] Implementação de GUI Nativa (Em progresso)
+- [ ] Suporte a Multi-Contas Sincronizadas
 
-## 🛡️ Security and Anti-Fingerprinting
-The script implements randomized delays between searches (`search_delay`), dynamic task ordering, and selective cache clearing to maintain account security.
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Para garantir a qualidade do código, siga as diretrizes em `CONTRIBUTING.md`.
+
+## 📜 Licença
+
+Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
 ---
-*Developed by **ViniciusPHDU20** | Professional Automation Solutions*
+*Desenvolvido com foco em soberania tecnológica e automação de elite.*

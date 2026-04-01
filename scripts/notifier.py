@@ -1,26 +1,21 @@
 import requests
-import json
-
-# Load settings
-with open("config/settings.json", "r") as f:
-    settings = json.load(f)
-
-WEBHOOK_URL = settings["discord_webhook_url"]
 
 def send_discord_notification(email, message):
-    if not WEBHOOK_URL:
-        print("❗ No Discord Webhook URL configured.")
+    """Envia notificação se o Webhook estiver configurado."""
+    webhook_url = "yourdiscordhookURLhere"
+    
+    # Se não configurado, ignora silenciosamente
+    if "yourdiscordhookURL" in webhook_url:
         return
-
-    payload = {
-        "username": "Microsoft Rewards Bot 🤖",
-        "content": f"📨 **{email}**\n{message}"
-    }
+        
     try:
-        response = requests.post(WEBHOOK_URL, json=payload)
+        data = {
+            "username": "Rewards Engine Bot",
+            "content": f"**[{email}]**\n{message}"
+        }
+        response = requests.post(webhook_url, json=data)
         if response.status_code == 204:
-            print("📨 Discord notification sent successfully!")
-        else:
-            print(f"⚠️ Discord webhook failed with status code: {response.status_code}")
+            print("🔔 Notificação enviada ao Discord.")
     except Exception as e:
-        print(f"⚠️ Error sending Discord notification: {e}")
+        # Silencia erros de rede ou configuração
+        pass
