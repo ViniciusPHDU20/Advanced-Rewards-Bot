@@ -1,6 +1,7 @@
 import asyncio
-import random
 import os
+import shutil
+import random
 import subprocess
 from typing import Dict, Any, List, Optional
 from playwright.async_api import async_playwright, BrowserContext, Page
@@ -8,8 +9,8 @@ from src.utils.logger import logger
 
 class RewardsEngine:
     """
-    Motor de automação Soberano v2.0.
-    Utiliza Contexto Persistente (Perfil Real do Edge) para evasão total.
+    Motor de Automação Enterprise v3.0.
+    Implementa Clonagem de Perfil Estratégica e Evasão HID via Playwright.
     """
 
     def __init__(self, config: Dict[str, Any]):
@@ -17,77 +18,75 @@ class RewardsEngine:
         self.playwright = None
         self.context: Optional[BrowserContext] = None
         self.page: Optional[Page] = None
-        self._hooks = []
+        self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+        self.bot_profile = os.path.join(self.project_root, "config/bot_profile")
 
-    def add_hook(self, callback):
-        self._hooks.append(callback)
+    def _clone_profile(self):
+        """Realiza a clonagem dos dados de autenticação para evitar travas de processo."""
+        source_profile = os.path.expanduser("~/.config/microsoft-edge")
+        
+        # Arquivos críticos para manter o login
+        essential_items = ["Default/Cookies", "Default/Login Data", "Local State"]
+        
+        os.makedirs(self.bot_profile, exist_ok=True)
+        logger.info("Sincronizando credenciais do Edge...")
 
-    async def _emit(self, event: str, data: Any = None):
-        for hook in self._hooks:
-            if asyncio.iscoroutinefunction(hook): await hook(event, data)
-            else: hook(event, data)
+        for item in essential_items:
+            src = os.path.join(source_profile, item)
+            dst = os.path.join(self.bot_profile, item)
+            if os.path.exists(src):
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                try:
+                    shutil.copy2(src, dst)
+                except Exception as e:
+                    logger.warning(f"Aviso na cópia de {item}: {e}")
 
     async def initialize(self, headless: bool = False, user_agent: str = None):
-        """Abre o Edge usando o seu perfil real do Arch Linux."""
+        """Inicializa o contexto isolado e logado."""
+        self._clone_profile()
+        
         if not self.playwright:
             self.playwright = await async_playwright().start()
 
-        # Caminho do Perfil Real do Edge no Arch
-        user_data_dir = os.path.expanduser("~/.config/microsoft-edge")
-        
         ua = user_agent or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0"
         
-        logger.info(f"Iniciando Edge com Perfil Real: {user_data_dir}")
-        
-        # O segredo da soberania: usar launch_persistent_context
+        logger.info("Lançando motor de navegação...")
         self.context = await self.playwright.chromium.launch_persistent_context(
-            user_data_dir=user_data_dir,
-            channel="msedge", # Força o uso do binário do Edge instalado
+            user_data_dir=self.bot_profile,
+            channel="msedge",
             headless=headless,
             user_agent=ua,
             viewport={'width': 1920, 'height': 1080},
-            args=[
-                "--no-first-run",
-                "--no-default-browser-check",
-                "--start-maximized"
-            ]
+            args=["--no-first-run", "--no-default-browser-check"]
         )
         
         self.page = self.context.pages[0] if self.context.pages else await self.context.new_page()
-        await self._emit("ENGINE_READY")
-
-    async def perform_search(self, keywords: List[str], mobile: bool = False):
-        """Realiza buscas usando a Ghost Engine (wtype) para bypass total."""
-        if not self.page: raise RuntimeError("Contexto não inicializado.")
-
-        logger.info(f"Iniciando Ghost Engine para {len(keywords)} buscas...")
+        # Aumentar timeout global para 60s para conexões Arch estáveis
+        self.page.set_default_timeout(60000)
         
+        await self.page.goto("https://www.bing.com", wait_until="domcontentloaded")
+        logger.info("Motor em prontidão operacional.")
+
+    async def perform_search(self, keywords: List[str]):
+        """Executa buscas com jitter de telemetria para bypass de detecção."""
+        if not self.page: raise RuntimeError("Engine não inicializada.")
+
         for term in keywords:
             try:
-                await self._emit("SEARCH_START", term)
-                
-                # Usa a lógica do wtype (Ghost Engine) direto no compositor Wayland
-                # Isso simula um teclado real digitando no sistema
-                reward_param = "ML102W" if not mobile else "ML102V"
-                url = f"https://www.bing.com/search?q={term.replace(' ', '+')}&form={reward_param}"
-                
-                logger.debug(f"Injetando busca via Wayland: {term}")
+                # Simulação de comportamento humano na URL
+                url = f"https://www.bing.com/search?q={term.replace(' ', '+')}&form=ML102W"
                 await self.page.goto(url, wait_until="domcontentloaded")
                 
-                # Simulação de interação humana real (Scroll)
-                await asyncio.sleep(random.uniform(5, 10))
-                for _ in range(random.randint(2, 4)):
-                    await self.page.mouse.wheel(0, random.randint(300, 700))
-                    await asyncio.sleep(random.uniform(1, 3))
+                # Jitter de interação
+                await asyncio.sleep(random.uniform(4, 8))
+                if random.random() > 0.5:
+                    await self.page.mouse.wheel(0, random.randint(200, 500))
                 
-                await self._emit("SEARCH_SUCCESS", term)
-                
+                logger.info(f"Busca validada: {term}")
             except Exception as e:
-                logger.error(f"Falha no termo {term}: {str(e)}")
+                logger.error(f"Falha no processamento: {e}")
 
     async def shutdown(self):
-        if self.context:
-            await self.context.close()
-        if self.playwright:
-            await self.playwright.stop()
-        logger.info("Sistema finalizado com integridade.")
+        if self.context: await self.context.close()
+        if self.playwright: await self.playwright.stop()
+        logger.info("Recursos liberados com integridade.")

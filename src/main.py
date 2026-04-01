@@ -6,8 +6,10 @@ from src.automation.searches import SearchAutomation
 from src.automation.stats import StatsAutomation
 from src.utils.logger import logger
 
+def clear_screen():
+    os.system('clear')
+
 def print_banner():
-    """Exibe o banner soberano do projeto no terminal."""
     print("\033[95m")
     print(" █████╗ ██████╗ ██╗   ██╗ █████╗ ███╗   ██╗ ██████╗███████╗██████╗ ")
     print("██╔══██╗██╔══██╗██║   ██║██╔══██╗████╗  ██║██╔════╝██╔════╝██╔══██╗")
@@ -15,78 +17,58 @@ def print_banner():
     print("██╔══██║██║  ██║╚██╗ ██╔╝██╔══██║██║╚██╗██║██║     ██╔══╝  ██║  ██║")
     print("██║  ██║██████╔╝ ╚████╔╝ ██║  ██║██║ ╚████║╚██████╗███████╗██████╔╝")
     print("╚═╝  ╚═╝╚═════╝   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚═════╝ ")
-    print("      REWARDS BOT - SOBERANO EDITION v1.6 | JESUS COMMAND")
+    print("      ADVANCED REWARDS BOT | SOBERANO v3.0 | JESUS COMMAND")
     print("\033[0m")
 
 async def interactive_menu():
-    """Menu CLI interativo e completo."""
-    config = {"user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-    engine = RewardsEngine(config)
+    engine = RewardsEngine({})
     automation = SearchAutomation(engine)
     stats = StatsAutomation(engine)
 
     while True:
-        os.system('clear')
+        clear_screen()
         print_banner()
-        print("\033[94m[1]\033[0m Farm Completo (Daily + Desktop + Mobile)")
-        print("\033[94m[2]\033[0m Apenas Buscas DESKTOP")
-        print("\033[94m[3]\033[0m Apenas Buscas MOBILE (Moto G52)")
-        print("\033[94m[4]\033[0m Consultar Saldo e Gerar Gráfico")
-        print("\033[94m[5]\033[0m Login Manual / Validar Sessão")
-        print("\033[91m[0]\033[0m Sair do Sistema")
-        print("\n" + "═"*60)
+        print("\033[94m[1]\033[0m Iniciar Farm Completo")
+        print("\033[94m[2]\033[0m Consultar Saldo e Gráfico")
+        print("\033[94m[3]\033[0m Login Manual / Atualizar Perfil")
+        print("\033[91m[0]\033[0m Sair")
+        print("\n" + "═"*65)
         
         choice = input("\033[95mSelecione a operação soberana: \033[0m")
 
-        if choice == "1":
-            await engine.initialize(headless=False)
-            page = await engine.context.new_page()
-            await page.goto("https://rewards.bing.com/", wait_until="networkidle")
-            await automation.run_desktop_searches(35)
-            await automation.run_mobile_searches(25)
-            await stats.get_current_points()
-            stats.generate_graph()
-            await engine.save_session()
-            input("\nFarm e Gráfico concluídos. Enter para voltar...")
-        elif choice == "2":
-            await engine.initialize(headless=False)
-            page = await engine.context.new_page()
-            await page.goto("https://rewards.bing.com/", wait_until="networkidle")
-            await automation.run_desktop_searches(35)
-            await engine.save_session()
-            input("\nBuscas Desktop concluídas. Enter para voltar...")
-        elif choice == "3":
-            await engine.initialize(headless=False)
-            page = await engine.context.new_page()
-            await page.goto("https://rewards.bing.com/", wait_until="networkidle")
-            await automation.run_mobile_searches(25)
-            await engine.save_session()
-            input("\nBuscas Mobile concluídas. Enter para voltar...")
-        elif choice == "4":
-            await engine.initialize(headless=True)
-            pts = await stats.get_current_points()
-            stats.generate_graph()
-            print(f"\n\033[92mSUCESSO: Saldo atualizado para {pts} pts!\033[0m")
-            input("\nPressione Enter para voltar...")
-        elif choice == "5":
-            print("\n\033[93m[!] Abrindo navegador para login manual...\033[0m")
-            # Deletar sessão antiga se existir para forçar login limpo
-            state_path = "/home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/session_state.json"
-            if os.path.exists(state_path):
-                os.remove(state_path)
+        try:
+            if choice == "1":
+                logger.info("Iniciando ciclo de farm...")
+                await engine.initialize(headless=False)
+                await automation.run_desktop_searches(35)
+                await automation.run_mobile_searches(25)
+                await stats.get_current_points()
+                stats.generate_graph()
+                input("\n\033[92m[OK] Operação concluída. ENTER para voltar...\033[0m")
             
-            await engine.initialize(headless=False)
-            page = await engine.context.new_page()
-            await page.goto("https://login.live.com/", wait_until="networkidle")
-            input("\n\033[92m[?] Login concluído? Pressione ENTER para salvar a sessão e fechar...\033[0m")
-            await engine.save_session()
-            print("\033[92m[OK] Sessão salva com sucesso!\033[0m")
-            await asyncio.sleep(2)
-        elif choice == "0":
-            break
+            elif choice == "2":
+                await engine.initialize(headless=True)
+                pts = await stats.get_current_points()
+                stats.generate_graph()
+                print(f"\n\033[92mSaldo Atual: {pts} pts\033[0m")
+                input("\nENTER para voltar...")
+            
+            elif choice == "3":
+                logger.info("Abrindo navegador para validação de conta...")
+                await engine.initialize(headless=False)
+                print("\n\033[93m[!] Após validar o login, feche o navegador ou pressione ENTER aqui.\033[0m")
+                input()
+            
+            elif choice == "0":
+                break
         
-        if engine.browser:
-            await engine.shutdown()
+        except Exception as e:
+            logger.error(f"Ocorreu um erro técnico: {e}")
+            input("\nPressione ENTER para tentar novamente...")
+        
+        finally:
+            if engine.playwright:
+                await engine.shutdown()
 
 if __name__ == "__main__":
     try:
