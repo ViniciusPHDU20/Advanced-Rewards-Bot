@@ -8,8 +8,8 @@ from src.utils.logger import logger
 
 class RewardsEngine:
     """
-    Motor de Automação Soberano v4.2.
-    Injeção de parâmetros oficiais do Microsoft Rewards para validação de pontos.
+    Motor de Automação Soberano v4.3.
+    Cadência Humana Validada e Injeção de Parâmetros de Ponto.
     """
 
     def __init__(self, config: Dict[str, Any]):
@@ -35,7 +35,7 @@ class RewardsEngine:
 
         ua = user_agent or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0"
         
-        logger.info(f"Lançando Navegador Soberano...")
+        logger.info(f"Lançando Navegador Soberano (Headless: {headless})...")
         try:
             self.context = await self._playwright.chromium.launch_persistent_context(
                 user_data_dir=self.profile_path,
@@ -55,29 +55,34 @@ class RewardsEngine:
             raise e
 
     async def perform_search(self, keywords: List[str], is_mobile: bool = False):
-        """Executa buscas com parâmetros de injeção de pontos (ML102W / ML102V)."""
+        """Executa buscas com cadência humana validada (15-22s) e parâmetros de ponto."""
         if not self.page: raise RuntimeError("Engine não inicializada.")
 
-        # Parâmetros Soberanos para contabilização de pontos
         reward_param = "ML102W" if not is_mobile else "ML102V"
         
-        for term in keywords:
+        for index, term in enumerate(keywords):
             try:
-                # URL completa com rastreamento de recompensa
+                # Simula comportamento orgânico a cada 5 buscas
+                if index > 0 and index % 5 == 0:
+                    logger.debug("Simulando navegação orgânica para evitar detecção...")
+                    await self.page.goto("https://www.bing.com", wait_until="domcontentloaded")
+                    await asyncio.sleep(random.uniform(5, 10))
+
                 url = f"https://www.bing.com/search?q={term.replace(' ', '+')}&form={reward_param}&OCID={reward_param}&PUBL=REWARDS_DASHBOARD"
                 
                 await self.page.goto(url, wait_until="domcontentloaded")
                 
-                # Jitter humano (Microsoft detecta se for muito rápido)
-                await asyncio.sleep(random.uniform(10, 18))
+                # CADÊNCIA VALIDADA: 15 a 22 segundos para crédito de pontos
+                delay = random.uniform(15, 22)
+                logger.info(f"[{index+1}/{len(keywords)}] Busca: {term} | Aguardando {delay:.1f}s")
+                await asyncio.sleep(delay)
                 
-                if random.random() > 0.5:
-                    await self.page.mouse.wheel(0, random.randint(400, 900))
-                    await asyncio.sleep(2)
+                # Interação física simulada (Scroll)
+                if random.random() > 0.4:
+                    await self.page.mouse.wheel(0, random.randint(300, 800))
                 
-                logger.info(f"Ponto Computado: {term}")
             except Exception as e:
-                logger.warning(f"Falha no ponto: {e}")
+                logger.warning(f"Falha no termo {term}: {e}")
 
     async def shutdown(self):
         try:
