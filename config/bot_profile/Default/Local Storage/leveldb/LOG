@@ -1,3 +1,6 @@
-2026/04/01-07:25:58.401 40cd4 Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Local Storage/leveldb/MANIFEST-000001
-2026/04/01-07:25:58.406 40cd4 Recovering log #3
-2026/04/01-07:25:58.407 40cd4 Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Local Storage/leveldb/000003.log 
+2026/04/01-07:37:38.870 4195e Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Local Storage/leveldb/MANIFEST-000001
+2026/04/01-07:37:38.876 4195e Recovering log #3
+2026/04/01-07:37:38.876 4195e Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Local Storage/leveldb/000003.log 
+2026/04/01-07:39:39.328 41962 Level-0 table #5: started
+2026/04/01-07:39:39.332 41962 Level-0 table #5: 41068 bytes OK
+2026/04/01-07:39:39.335 41962 Delete type=0 #3
