@@ -9,33 +9,34 @@ class SearchAutomation:
     def __init__(self, engine: RewardsEngine):
         self.engine = engine
 
-    async def run_desktop_searches(self, count: int = 30):
+    async def run_desktop_searches(self, count: int = 35):
         """Executa buscas simulando um ambiente Desktop."""
-        logger.info(f"Iniciando ciclo de {count} buscas DESKTOP...")
-        # Lista de termos reais para evitar detecção
+        logger.info(f"Iniciando {count} buscas DESKTOP...")
+        
+        # Lista de termos soberanos
         terms = [
-            "melhores configurações arch linux", "notícias tecnologia", 
-            "clima agora", "cotação dólar", "receitas rápidas",
-            "lançamentos steam 2026", "como otimizar xeon v2",
-            "vulkan vs opengl linux", "hyprland config tutorial"
+            "configuração arch linux 2026", "nvidia drivers arch wiki",
+            "hyprland status bar custom", "vulkan layers guide",
+            "melhores games steam deck", "clima em cosmópolis",
+            "cotação btc hoje", "notícias inteligência artificial"
         ]
-        # Gerar mais termos se necessário
         search_list = random.sample(terms * (count // len(terms) + 1), count)
         
         await self.engine.perform_search(search_list)
-        logger.info("Buscas DESKTOP finalizadas.")
+        logger.info("Ciclo DESKTOP finalizado.")
 
-    async def run_mobile_searches(self, count: int = 20):
-        """Executa buscas emulando o Moto G52 sem perder a sessão."""
-        logger.info(f"Trocando para identidade MOBILE (Moto G52)... {count} buscas pendentes.")
+    async def run_mobile_searches(self, count: int = 25):
+        """Executa buscas emulando o Moto G52 (Amoled Shadow)."""
+        logger.info(f"Trocando para identidade MOBILE (Moto G52)...")
         
+        # User-Agent do Moto G52 do JESUS
         mobile_ua = "Mozilla/5.0 (Linux; Android 16; Moto G52) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
         
-        # Reinicia o contexto com o novo User-Agent mantendo os cookies
+        # Reinicia o contexto com o User-Agent mobile preservando o login
         await self.engine.initialize(headless=False, user_agent=mobile_ua)
         
-        terms = ["filmes em cartaz", "restaurantes próximos", "jogos android", "preço moto g52", "clima amanhã", "notícias do dia"]
+        terms = ["restaurantes próximos", "preço gasolina hoje", "jogos mobile free", "filmes em cartaz"]
         search_list = random.sample(terms * (count // len(terms) + 1), count)
         
         await self.engine.perform_search(search_list)
-        logger.info("Buscas MOBILE finalizadas.")
+        logger.info("Ciclo MOBILE finalizado.")

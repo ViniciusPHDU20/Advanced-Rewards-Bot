@@ -1,2 +1,3 @@
-2026/04/01-07:22:58.910 4089b Creating DB /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/GCM Store since it was missing.
-2026/04/01-07:22:58.911 4089b Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/GCM Store/MANIFEST-000001
+2026/04/01-07:26:05.648 40cc1 Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/GCM Store/MANIFEST-000001
+2026/04/01-07:26:05.649 40cc1 Recovering log #3
+2026/04/01-07:26:05.649 40cc1 Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/GCM Store/000003.log 

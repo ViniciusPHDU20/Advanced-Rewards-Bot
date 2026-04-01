@@ -1,2 +1,3 @@
-2026/04/01-07:22:56.574 4089b Creating DB /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Sync Data/LevelDB since it was missing.
-2026/04/01-07:22:56.577 4089b Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/04/01-07:25:58.393 40cb3 Reusing MANIFEST /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/04/01-07:25:58.394 40cb3 Recovering log #3
+2026/04/01-07:25:58.395 40cb3 Reusing old log /home/viniciusphdu/WORKSPACE_CORE/Advanced-Rewards-Bot/config/bot_profile/Default/Sync Data/LevelDB/000003.log 
