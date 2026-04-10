@@ -1,71 +1,64 @@
-# Advanced Rewards Bot (Soberano Edition)
+# ⚡ Advanced-Rewards-Bot: Autonomous Multi-Account Farming Suite
 
-[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/ViniciusPHDU20/Advanced-Rewards-Bot/graphs/commit-activity)
+**Advanced-Rewards-Bot** is a high-performance, resilient automation suite designed for multi-account management and farming. It utilizes a **Ghost Engine** architecture to emulate human-like behavior, effectively bypassing modern anti-bot detections while maintaining 24/7 operational stability.
 
-## 📌 Visão Geral
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.x-yellow.svg)](https://www.python.org/)
+[![Playwright](https://img.shields.io/badge/Engine-Playwright-brightgreen.svg)](https://playwright.dev/)
 
-O **Advanced Rewards Bot** é uma engine de automação de alto desempenho projetada para a plataforma Microsoft Rewards. Construída com foco em **fator de evasão de detecção (EDF)** e **estabilidade de execução**, a ferramenta utiliza uma arquitetura híbrida de **Playwright** para orquestração de sessões e **Ghost Engine** para emulação nativa de entrada de hardware (HID) no Linux/Wayland.
+## 🚀 Strategic Features
 
-O projeto foi arquitetado sob princípios **SOLID**, permitindo a integração de interfaces gráficas customizadas e a expansão de módulos de busca sem a necessidade de alteração no núcleo do sistema.
+- **Ghost Engine Architecture**: Specialized spoofing of browser fingerprints, hardware identifiers, and mobile device headers (e.g., Moto G52 emulation).
+- **Autonomous Decision Making**: Intelligent navigation patterns and randomized delays to simulate natural user interaction.
+- **Multi-Account Proxy Support**: Seamless rotation of credentials and proxies to ensure account isolation and security.
+- **Real-Time Visual Analytics**: Integrated telemetry dashboard (`control_panel.py`) and point tracking graphs (`graph_points.py`).
+- **Forensic Verification**: Automated spoofing verification (`verify_app_spoof.py`) to ensure the environment remains undetectable.
 
-## 🚀 Principais Funcionalidades
+## 🧰 Tech Stack
 
-- **Multi-Plataforma (Emulação):** Suporte nativo para emulação de dispositivos mobile (ex: Moto G52) com injeção de User-Agent e viewport dinâmico.
-- **Ghost Engine (Bypass Nível 2):** Utiliza `wtype` e `hyprctl` para simular entradas de teclado e mouse reais no Hyprland, evitando detecções sintéticas do WebRTC.
-- **Arquitetura Baseada em Hooks:** Pronto para integração com GUIs (Qt, Rust/Iced, Go/Fyne) via barramento de eventos.
-- **Gerenciamento de Sessão Persistente:** Clonagem e restauração automática de perfis de navegação para evitar re-logins constantes.
-- **Sistema de Log Enterprise:** Logs rotativos e estruturados em JSON para auditoria técnica.
+| Component | Technology |
+| :--- | :--- |
+| **Core Automation** | Playwright (Python) |
+| **Telemetry & UI** | Flask / Matplotlib |
+| **Data Management** | JSON / CSV / SQLite |
+| **Spoofing Engine** | Custom User-Agent & Header Injectors |
 
-## 🏗️ Arquitetura do Sistema
+## 🛠 Deployment & Usage
 
-```bash
-Advanced-Rewards-Bot/
-├── src/
-│   ├── api/            # Interfaces e barramento de eventos para GUI
-│   ├── automation/     # Lógica específica de busca e farm
-│   ├── core/           # Motor principal (Playwright Engine)
-│   ├── utils/          # Helpers, Loggers e Config-Manager
-│   └── main.py         # Ponto de entrada (Entrypoint)
-├── config/             # Arquivos de configuração (YAML/ENV)
-├── docs/               # Documentação técnica estendida
-└── tests/              # Suíte de testes unitários e integração
-```
+### Prerequisites
 
-## 🛠️ Instalação e Configuração
-
-### Pré-requisitos
 - Python 3.10+
-- Playwright (`pip install playwright`)
-- Wtype (para Linux/Wayland)
+- Playwright browsers installed:
+  ```bash
+  playwright install chromium
+  ```
 
-### Configuração
-1. Clone o repositório:
+### Quick Start
+
+1. Clone the suite:
    ```bash
    git clone https://github.com/ViniciusPHDU20/Advanced-Rewards-Bot.git
+   cd Advanced-Rewards-Bot
    ```
-2. Instale as dependências:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
-   playwright install chromium
    ```
-3. Configure as credenciais no diretório `config/settings.yaml`.
+3. Execute the farm:
+   ```bash
+   ./run_farm.sh
+   ```
 
-## 📈 Roadmap de Desenvolvimento
+## 📊 Monitoring
 
-- [x] Motor de Automação Core (v1.0)
-- [x] Integração Ghost Engine (Bypass)
-- [ ] Implementação de GUI Nativa (Em progresso)
-- [ ] Suporte a Multi-Contas Sincronizadas
+The bot generates real-time logs and visual reports:
+- **`farm_progress.log`**: Detailed operational history.
+- **`points_history_graph.png`**: Visual representation of farming efficiency.
+- **`control_panel.py`**: Start this for a centralized management interface.
 
-## 🤝 Contribuição
+## 🛡️ Ethics & Disclaimer
 
-Contribuições são bem-vindas! Para garantir a qualidade do código, siga as diretrizes em `CONTRIBUTING.md`.
-
-## 📜 Licença
-
-Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
+This tool is developed for educational and research purposes only. The authors are not responsible for any account bans or misuse of the software. Use responsibly and within the terms of service of the target platforms.
 
 ---
-*Desenvolvido com foco em soberania tecnológica e automação de elite.*
+*Developed by **ViniciusPHDU20***
